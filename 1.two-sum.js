@@ -11,13 +11,15 @@
  * @return {number[]}
  */
 var twoSum = function (nums, target) {
-  const valueIndexPair = {};
+  // const valueIndexobj = {};
+  const valueIndexPair = new Map();
   for (let i = 0; i < nums.length; i++) {
     const lookingFor = target - nums[i];
-    if (valueIndexPair[lookingFor] === undefined) {
-      valueIndexPair[nums[i]] = i;
+    if (!valueIndexPair.has(lookingFor)) {
+      // valueIndexobj[nums[i]] = i;
+      valueIndexPair.set(nums[i], i);
     } else {
-      return [valueIndexPair[lookingFor], i];
+      return [valueIndexPair.get(lookingFor), i];
     }
   }
 };
