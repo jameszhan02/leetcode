@@ -52,3 +52,5 @@ const merge = (arr: number[], start: number, mid: number, end: number) => {
 const test_arr = [3, 55, 77, 23, 65, 86, 224, 24, 1, 0, 52, 11]
 mergeSort(test_arr)
 console.log({ test_arr })
+
+//TODO: modify a bit you could finish | 1.  Small Sum Problem | 2. Inversion Problem -----
