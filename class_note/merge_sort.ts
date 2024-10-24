@@ -1,9 +1,9 @@
 const mergeSort = (inputArray: number[]) => {
   if (inputArray.length < 2 || !inputArray) return
-  process(inputArray, 0, inputArray.length)
+  sortProcess(inputArray, 0, inputArray.length - 1)
 }
 
-const process = (arr: number[], start: number, end: number) => {
+const sortProcess = (arr: number[], start: number, end: number) => {
   if (start === end) return
 
   /*
@@ -16,35 +16,39 @@ const process = (arr: number[], start: number, end: number) => {
   by doing this way will avoid stackoverflow issue
   */
   const mid = start + ((end - start) >> 1)
-  process(arr, start, mid)
-  process(arr, mid + 1, end)
+  sortProcess(arr, start, mid)
+  sortProcess(arr, mid + 1, end)
   merge(arr, start, mid, end)
 }
 
 const merge = (arr: number[], start: number, mid: number, end: number) => {
   //unit == unsigned
-  const helpArr = new Uint8Array(end - start + 1)
-  let helpIndex = 0
+  // const helpArr = new Uint8Array(end - start + 1)
+  const helpArr: number[] = []
   let pointerLeft = start
   let pointerRight = mid + 1
   //compare the current pointers and copy the less one into the helper array - before one of them hit the end.
   while (pointerLeft <= mid && pointerRight <= end) {
-    helpArr[helpIndex] =
+    helpArr.push(
       arr[pointerLeft] <= arr[pointerRight]
         ? arr[pointerLeft++]
         : arr[pointerRight++]
+    )
   }
   while (pointerLeft <= mid) {
-    helpArr[helpIndex++] = arr[pointerLeft++]
+    helpArr.push(arr[pointerLeft++])
   }
   while (pointerRight <= end) {
-    helpArr[helpIndex++] = arr[pointerRight++]
+    helpArr.push(arr[pointerRight++])
   }
+
+  console.log({ helpArr })
+
+  helpArr.forEach((value, index) => {
+    arr[start + index] = value
+  })
 }
 
-
-const res_merge_sort = mergeSort([3, 55, 77, 23, 65, 86, 224, 24, 1, 0, 52, 11])
-console.log({res_merge_sort});
-
-
-
+const test_arr = [3, 55, 77, 23, 65, 86, 224, 24, 1, 0, 52, 11]
+mergeSort(test_arr)
+console.log({ test_arr })
