@@ -42,8 +42,6 @@ const merge = (arr: number[], start: number, mid: number, end: number) => {
     helpArr.push(arr[pointerRight++])
   }
 
-  console.log({ helpArr })
-
   helpArr.forEach((value, index) => {
     arr[start + index] = value
   })
