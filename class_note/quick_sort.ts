@@ -19,7 +19,39 @@ A: Need to boderIndex, 1. leftBorder= -1 2. rightBorder=arr.length. and 3. point
 */
 
 let stepCount = 0
-const quickSort = (arr: number[], left: number, right: number) => {
+
+const quickSortWithHelpArr = (arr: number[]) => {
+  if (arr.length < 1) return []
+  const pivotIndex = (arr.length - 1) >> 1
+  console.log({ pivotIndex })
+  const pivot = arr[pivotIndex]
+
+  const left: number[] = []
+  const right: number[] = []
+  for (let i = 0; i < arr.length; i++) {
+    const current = arr[i]
+    if (pivotIndex === i) {
+      continue
+    }
+    if (current <= pivot) {
+      left.push(current)
+    } else {
+      right.push(current)
+    }
+  }
+
+  const currentRes = [
+    ...quickSortWithHelpArr(left),
+    pivot,
+    ...quickSortWithHelpArr(right),
+  ]
+  //   console.log(`Step ${stepCount++}: | ${left} | ${pivot} | ${right} |`)
+  console.log(`Step ${stepCount++}: | ${currentRes} |`)
+  return currentRes
+}
+
+//TODO: error reminder for inplace
+const quickSortInplace = (arr: number[], left: number, right: number) => {
   if (left >= right) {
     return
   }
@@ -41,9 +73,15 @@ const quickSort = (arr: number[], left: number, right: number) => {
   ;[arr[right], arr[rightPointer]] = [arr[rightPointer], arr[right]]
   console.log(`Step ${stepCount++}: | ${test_data} |`)
 
-  quickSort(arr, left, leftPointer)
-  quickSort(arr, rightPointer, right)
+  quickSortInplace(arr, left, leftPointer)
+  quickSortInplace(arr, rightPointer, right)
 }
 
-quickSort(test_data, 0, test_data.length - 1)
-console.log('Final: ' + test_data)
+// quickSortInplace(test_data, 0, test_data.length - 1)
+
+const quickSortRes = quickSortWithHelpArr(test_data)
+console.log(
+  '============== Final Quick_Sort for ez One: ' +
+    quickSortRes +
+    ' =============='
+)
