@@ -52,14 +52,17 @@ const quickSortWithHelpArr = (arr: number[]) => {
 
 //TODO: error reminder for inplace
 const quickSortInplace = (arr: number[], left: number, right: number) => {
-  if (left >= right) {
+  if (left >= right - 1) {
     return
   }
   //TODO: instead of pick the most right, pick a random than swap it to the back, after the sort put it back to the first in 'bigger' group
   let leftPointer = left - 1
   let rightPointer = right
-  const pivot = arr[right]
-  for (let i = left; i < rightPointer - 1; i++) {
+  const pivotIndex = Math.floor(Math.random() * (right - left) + left)
+  const pivot = arr[pivotIndex]
+  ;[arr[pivotIndex], arr[right]] = [arr[right], arr[pivotIndex]]
+  for (let i = left; i < rightPointer; i++) {
+    const snapCurrentNumber = arr[i]
     if (arr[i] < pivot) {
       ;[arr[i], arr[leftPointer + 1]] = [arr[leftPointer + 1], arr[i]]
       leftPointer++
@@ -67,21 +70,30 @@ const quickSortInplace = (arr: number[], left: number, right: number) => {
     if (arr[i] > pivot) {
       ;[arr[i], arr[rightPointer - 1]] = [arr[rightPointer - 1], arr[i]]
       rightPointer--
+      i--
     }
+    
+  console.log(`Step ${stepCount++}: | ${arr} | pivot: ${pivot} | leftPointer: ${leftPointer} | rightPointer: ${rightPointer} | currentIndex: ${i} | currentNumber: ${snapCurrentNumber}`)
+
   }
   //switch
   ;[arr[right], arr[rightPointer]] = [arr[rightPointer], arr[right]]
-  console.log(`Step ${stepCount++}: | ${test_data} |`)
+  // console.log(`Step ${stepCount++}: | ${test_data} |`)
 
   quickSortInplace(arr, left, leftPointer)
   quickSortInplace(arr, rightPointer, right)
 }
 
-// quickSortInplace(test_data, 0, test_data.length - 1)
 
-const quickSortRes = quickSortWithHelpArr(test_data)
-console.log(
-  '============== Final Quick_Sort for ez One: ' +
-    quickSortRes +
-    ' =============='
-)
+// const quickSortRes = quickSortWithHelpArr(test_data)
+// console.log(
+//   '============== Final Quick_Sort for ez One: ' +
+//     quickSortRes +
+//     ' =============='
+// )
+
+
+quickSortInplace(test_data, 0, test_data.length - 1) 
+console.log({test_data});
+
+
