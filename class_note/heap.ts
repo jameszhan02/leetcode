@@ -90,6 +90,12 @@ const heapify = (arr: number[], index: number) => {
 // main()
 
 const random_arr = [1, 8, 9, 3, 4, 5, 6, 0, 9]
-complete_heap(random_arr)
+// complete_heap(random_arr)
 // heapify(random_arr, 0)
+
+
+// back ward loop with heapify will also create a max heap!!!
+for (let index = random_arr.length - 1; index >= 0; index--) {
+    heapify(random_arr, index)
+}
 console.log({random_arr});
