@@ -1,25 +1,25 @@
 module.exports = {
-  trailingComma: "es5",
+  trailingComma: 'es5',
   bracketSpacing: true,
   tabWidth: 2,
   semi: false,
   singleQuote: true,
-  arrowParens: "always",
-  endOfLine: "auto",
+  arrowParens: 'always',
+  endOfLine: 'auto',
   overrides: [
     {
-      files: "Routes.*",
+      files: 'Routes.*',
       options: {
         printWidth: 999,
       },
     },
     {
-      files: "*.scss",
+      files: '*.scss',
       options: {
         singleQuote: false,
-        parser: "scss",
+        parser: 'scss',
         tabWidth: 2,
       },
     },
   ],
-};
+}
