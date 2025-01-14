@@ -6,23 +6,19 @@
 
 // @lc code=start
 function groupAnagrams(strs: string[]): string[][] {
-  const copyStrs = JSON.parse(JSON.stringify(strs))
   const wordIndexMap = new Map()
-  for (let i = 0; i < copyStrs.length; i++) {
-    const word = copyStrs[i].split('').sort().join('')
-    if (!wordIndexMap.has(word)) {
-      wordIndexMap.set(word, [i])
-    } else {
-      wordIndexMap.set(word, [i, ...wordIndexMap.get(word)])
-    }
-  }
+  let indexCount = 0
   const ans: string[][] = []
-  for (const value of wordIndexMap.values()) {
-    const currentGroup: string[] = []
-    for (let index = 0; index < value.length; index++) {
-      currentGroup.push(strs[value[index]])
+  for (let i = 0; i < strs.length; i++) {
+    const word = strs[i].split('').sort().join('')
+    if (!wordIndexMap.has(word)) {
+      wordIndexMap.set(word, indexCount)
+      ans[indexCount] = [strs[i]]
+      indexCount++
+    } else {
+      const groupIndex = wordIndexMap.get(word)
+      ans[groupIndex] = [...ans[groupIndex], strs[i]]
     }
-    ans.push(currentGroup)
   }
   return ans
 }
