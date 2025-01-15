@@ -6,27 +6,19 @@
 
 // @lc code=start
 function maxProduct(nums: number[]): number {
-  if (nums.length == 1) return nums[0]
-  if (nums.length == 2) {
-    const prod = nums[0] * nums[1]
-    const biggerNum = Math.max(nums[0], nums[1])
-    return Math.max(prod, biggerNum)
+  let highest: number = nums[0]
+  let currentMin: number = highest
+  let currentMax: number = highest
+  for (let i = 1; i < nums.length; i++) {
+    const num = nums[i] // this num is also a candidate
+    const candidateOne = currentMin * num
+    const candidateTwo = currentMax * num
+
+    currentMax = Math.max(num, candidateOne, candidateTwo)
+    currentMin = Math.min(num, candidateOne, candidateTwo)
+
+    highest = Math.max(currentMax, highest)
   }
-  let currentMax: number | undefined = undefined
-  let currentSlot: number | undefined = undefined
-  for (let i = 0; i < nums.length; i++) {
-    if (i == 0) {
-      currentSlot = nums[i]
-      currentMax = nums[i]
-      continue
-    }
-    currentSlot = currentSlot! * nums[i]
-    if (currentSlot > currentMax!) {
-      currentMax = currentSlot
-    } else {
-      currentSlot = nums[i]
-    }
-  }
-  return currentMax!
+  return highest
 }
 // @lc code=end
