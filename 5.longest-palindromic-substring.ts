@@ -28,6 +28,7 @@ const checkPalindromeFromMiddle = (string: string, left: number, right:number) =
         left--
         right++
     }
+    // - 1 cause in the orginal while condition, last itrate is left , right moved before verifgy the status.
     return right - left - 1
 }
 
