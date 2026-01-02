@@ -6,15 +6,19 @@
 
 // @lc code=start
 function wordBreak(s: string, wordDict: string[]): boolean {
-    // Online Javascript Editor for free
-    // Write, Edit and Run your Javascript code using JS Online Compiler
-    const testString = "thisIsATestGST"
-    const testSubString = "Test"
-    const idx = testString.indexOf(testSubString)
-    const afterTest = testString.slice(0, idx) + testString.slice(idx + testSubString.length)
-
-    console.log({ idx });
-    console.log({ afterTest });
+    const wordDictSet= new Set(wordDict)
+    const dp = new Array(s.length + 1)
+    dp.fill(false)
+    dp[0] = true
+    for(let idx = 0; idx < dp.length; idx++){
+        for(let j = 0; j < idx; j++){
+            if(dp[j] && wordDictSet.has(s.slice(j, idx))){
+                dp[idx] = true
+                break
+            }
+        }
+    }
+    return dp[s.length]
 };
 // @lc code=end
 
