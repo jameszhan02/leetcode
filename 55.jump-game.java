@@ -7,22 +7,24 @@
 // @lc code=start
 class Solution {
     public boolean canJump(int[] nums) {
-        for (int i = 0; i < nums.length; i = i) {
-            int max = 0;
-            // fetch current and see whats the furtherst steps.
+        int i = 0;
+        while (i < nums.length) {
             int jumps = nums[i];
-            for (int j = 0; j < jumps; j++) {
+            
+            if (i + jumps >= nums.length - 1) return true;
+            
+            if (jumps == 0) return false;
+            
+            int maxReach = 0;
+            int nextPos = i;
+            for (int j = 1; j <= jumps; j++) {
                 int reach = i + j;
-                if (j + nums[reach] > max) {
-                    max = j + nums[reach];
+                if (reach + nums[reach] > maxReach) {
+                    maxReach = reach + nums[reach];
+                    nextPos = reach; 
                 }
             }
-            if (max == 0) {
-                return false;
-            }
-            if (i + max >= nums.length - 1) {
-                return true;
-            }
+            i = nextPos; 
         }
         return false;
     }
