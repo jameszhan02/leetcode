@@ -6,39 +6,36 @@
 
 # @lc code=start
 class Solution(object):
-    def findMedianSortedArrays(self, nums1, nums2):
-        """
-        :type nums1: List[int]
-        :type nums2: List[int]
-        :rtype: float
-        """
-        num1Median = self.medianNums(nums1)
-        num2Median = self.medianNums(nums2)
-        l = len(num1Median) + len(num2Median)
-        jointnums = num1Median + num2Median
-        jointnums.sort()
-        print(jointnums)
-        if(l == 1):
-            return jointnums[0]
-        if(l==2):
-            return (jointnums[0] + jointnums[1]) / 2.0
-        if(l == 3):
-            return jointnums[1]
-        if(l == 4):
-            return (jointnums[1] + jointnums[2]) / 2.0
-        # if odd num len, a signle median exist, otherwise find 2 
+  def findMedianSortedArrays(self, nums1, nums2):
+    # 第一步：让 nums1 永远是短的（二分范围小）
+    if len(nums1) > len(nums2):
+        nums1, nums2 = nums2, nums1
+    
+    m, n = len(nums1), len(nums2)
+    half = (m + n + 1) // 2  # 左半边要几个元素
 
-    def medianNums(self, list):
-        length = len(list)
-        medianCandidates = []
-        if(length == 0):
-            return []
-        if(length % 2 == 0):
-            medianCandidates.append(list[length // 2 - 1])
-            medianCandidates.append(list[length // 2])
+    lo, hi = 0, m
+
+    while lo <= hi:
+        i = (lo + hi) // 2  # nums1 切割点：左边取 i 个
+        j = half - i         # nums2 切割点：左边取 j 个（自动算出）
+
+        # 切割点左右的4个边界值（越界就用正负无穷）
+        L1 = nums1[i-1] if i > 0 else float('-inf')  # nums1 左边最大
+        R1 = nums1[i]   if i < m else float('inf')   # nums1 右边最小
+        L2 = nums2[j-1] if j > 0 else float('-inf')  # nums2 左边最大
+        R2 = nums2[j]   if j < n else float('inf')   # nums2 右边最小
+
+        if L1 <= R2 and L2 <= R1:
+            # ✅ 切割点正确！
+            if (m + n) % 2 == 1:
+                return float(max(L1, L2))          # 奇数：左边最大就是中位数
+            else:
+                return (max(L1, L2) + min(R1, R2)) / 2.0  # 偶数：取中间两个平均
+
+        elif L1 > R2:
+            hi = i - 1   # nums1 切太靠右了，往左移
         else:
-            medianCandidates.append(list[length // 2 ])
-
-        return medianCandidates
+            lo = i + 1   # nums1 切太靠左了，往右移
 # @lc code=end
 
